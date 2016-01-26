@@ -3,7 +3,7 @@ package unix
 import (
 	"net"
 
-	"github.com/gliderlabs/logspout/adapters/raw"
+	"github.com/gswallow/logspout/adapters/raw"
 	"github.com/gliderlabs/logspout/router"
 )
 
@@ -18,7 +18,7 @@ func init() {
 	router.AdapterFactories.Register(rawUnixAdapter, "unix")
 }
 
-func rawUnixAdapter (route *router.Route) (route.LogAdapter, error) {
+func rawUnixAdapter (route *router.Route) (router.LogAdapter, error) {
   route.Adapter = "raw+unix"
   return raw.NewRawAdapter(route)
 }

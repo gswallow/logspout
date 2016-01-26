@@ -19,7 +19,7 @@ func init() {
 func NewRawAdapter(route *router.Route) (router.LogAdapter, error) {
 	transport, found := router.AdapterTransports.Lookup(route.AdapterTransport("udp"))
 	if !found {
-	  transport, found := router.AdapterTransports.Lookup(route.AdapterTransport("unix"))
+	  transport, found = router.AdapterTransports.Lookup(route.AdapterTransport("unix"))
 	  if !found {
 		  return nil, errors.New("bad transport: " + route.Adapter)
 		}
