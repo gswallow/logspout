@@ -19,7 +19,10 @@ func init() {
 func NewRawAdapter(route *router.Route) (router.LogAdapter, error) {
 	transport, found := router.AdapterTransports.Lookup(route.AdapterTransport("udp"))
 	if !found {
-		return nil, errors.New("bad transport: " + route.Adapter)
+	  transport, found := router.AdapterTransports.Lookup(route.AdapterTransport("unix"))
+	  if !found {
+		  return nil, errors.New("bad transport: " + route.Adapter)
+		}
 	}
 	conn, err := transport.Dial(route.Address, route.Options)
 	if err != nil {
@@ -59,7 +62,9 @@ func (a *RawAdapter) Stream(logstream chan *router.Message) {
 		if err != nil {
 			log.Println("raw:", err)
 			if reflect.TypeOf(a.conn).String() != "*net.UDPConn" {
-				return
+			  if reflect.TypeOf(a.conn).String() != "*net.UnixConn" {
+				  return
+				}
 			}
 		}
 	}
