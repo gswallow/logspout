@@ -26,7 +26,7 @@ func rawUnixAdapter (route *router.Route) (router.LogAdapter, error) {
 type unixTransport int
 
 func (_ *unixTransport) Dial(addr string, options map[string]string) (net.Conn, error) {
-  raddr, err := net.ResolveUnixAddr{"unix", addr}
+  raddr, err := net.ResolveUnixAddr("unix", addr)
     if err != nil {
       return nil, err
     }
